@@ -1,0 +1,30 @@
+{
+  "name": "llm-doc-embeddings",
+  "version": "1.0.0",
+  "description": "",
+  "main": "search.js",
+  "scripts": {
+    "ai-search": "ts-node aiChat.ts",
+    "start": "ts-node search.ts",
+    "insert-file": "ts-node insertChunks.ts",
+    "insert-dir": "ts-node insertChunksFromDirectory.ts",
+    "search": "ts-node search.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "16.4.7",
+    "langchain": "0.3.8",
+    "ollama": "0.5.11",
+    "pg": "8.13.1",
+    "semantic-chunking": "2.4.1",
+    "ts-morph": "24.0.0",
+    "typescript": "5.7.2"
+  },
+  "devDependencies": {
+    "@types/pg": "8.11.10",
+    "@types/uuid": "10.0.0",
+    "ts-node": "10.9.2"
+  }
+}
