@@ -124,3 +124,11 @@ npm run search "What's an LLM"
 ```bash
 npm run ai-search "What's an LLM"
 ```
+
+### Start Web Server
+
+```bash
+npm start
+```
+
+Then load a search using: http://localhost:3000/ai-search?searchText=what%20is%20an%20llm.
