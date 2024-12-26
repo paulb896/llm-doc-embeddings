@@ -42,7 +42,7 @@ docker compose up -d
   - Password: password
   - Database: postgres
 
-### 3. Set up Ollama
+### 3. Set up Ollama and Configure Env Vars
 
 Install ollama locally or point to a managed ollama instance by setting OLLAMA_BASE_URL in the [example.env](example/.env).
 
@@ -58,11 +58,13 @@ TIMESCALE_SERVICE_URL=postgres://postgres:password@127.0.0.1:5432/postgres
 VECTOR_DATABASE_EMBEDDING_TABLE_NAME=text_chunks
 VECTOR_DATABASE_EMBEDDING_DIMENSIONS=1024
 
-# Uses https://github.com/jparkerweb/semantic-chunking when enabled
-USE_SEMANTIC_CHUNKING=true
+# Uses https://github.com/jparkerweb/semantic-chunking when true and langchain/document_loaders/fs/text when false.
+USE_SEMANTIC_CHUNKING=false
 
 OLLAMA_BASE_URL=http://127.0.0.1:11434
 OLLAMA_CHAT_MODEL=llama3.2
+
+# If this is changed, the VECTOR_DATABASE_EMBEDDING_DIMENSIONS may also need to be updated.
 OLLAMA_EMBEDDING_MODEL=mxbai-embed-large
 ```
 
