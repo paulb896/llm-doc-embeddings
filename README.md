@@ -2,6 +2,20 @@
 
 Parse and Load text files into Postges Vector DB which can be used as part of a RAG setup.
 
+- [LLM Text Document Embeddings](#llm-text-document-embeddings)
+  - [Set up Instructions](#set-up-instructions)
+    - [1. Set up Docker environment](#1-set-up-docker-environment)
+    - [2. Connect to the database using a PostgreSQL GUI client](#2-connect-to-the-database-using-a-postgresql-gui-client)
+    - [3. Set up Ollama and Configure Env Vars](#3-set-up-ollama-and-configure-env-vars)
+    - [4. Install Node Depdencies](#4-install-node-depdencies)
+  - [Usage](#usage)
+    - [Index Document](#index-document)
+    - [Index Directory of Documents](#index-directory-of-documents)
+    - [Search Indexed Database for Relevent Documents](#search-indexed-database-for-relevent-documents)
+    - [Use AI to Generate Response from Search Results](#use-ai-to-generate-response-from-search-results)
+    - [Start Web Server](#start-web-server)
+      - [View Swagger Docs](#view-swagger-docs)
+
 ## Set up Instructions
 
 ### 1. Set up Docker environment
@@ -66,6 +80,8 @@ OLLAMA_CHAT_MODEL=llama3.2
 
 # If this is changed, the VECTOR_DATABASE_EMBEDDING_DIMENSIONS may also need to be updated.
 OLLAMA_EMBEDDING_MODEL=mxbai-embed-large
+
+WEBSERVER_PORT=3000
 ```
 
 2. For linux based on the env config docs described [here](https://github.com/ollama/ollama/blob/main/docs/faq.md#setting-environment-variables-on-linux
@@ -131,4 +147,10 @@ npm run ai-search "What's an LLM"
 npm start
 ```
 
-Then load a search using: http://localhost:3000/ai-search?searchText=what%20is%20an%20llm.
+Then load a search using: http://localhost:3000/ai-search?searchText=what%20is%20an%20llm&dbResultLimit=5.
+
+#### View Swagger Docs
+
+[![Swagger Docs](swagger.png)](http://localhost:3000/docs)
+
+Swagger docs are available here: **http://localhost:3000/docs**.

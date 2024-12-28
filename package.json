@@ -14,19 +14,21 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fastify/swagger": "9.4.0",
+    "@fastify/swagger-ui": "5.2.0",
     "dotenv": "16.4.7",
     "fastify": "5.2.0",
     "langchain": "0.3.8",
     "ollama": "0.5.11",
     "pg": "8.13.1",
     "semantic-chunking": "2.4.1",
-    "ts-morph": "24.0.0"
+    "ts-morph": "24.0.0",
+    "ts-node": "10.9.2"
   },
   "devDependencies": {
     "@types/node": "22.10.2",
     "@types/pg": "8.11.10",
     "@types/uuid": "10.0.0",
-    "ts-node": "10.9.2",
     "typescript": "5.7.2"
   }
 }
