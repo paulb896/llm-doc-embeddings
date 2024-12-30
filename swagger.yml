@@ -1,0 +1,78 @@
+swagger: "2.0"
+info:
+  title: LLM Doc Embeddings AI Search API
+  description: API documentation for AI search
+  version: 1.0.0
+definitions: {}
+paths:
+  /ai-search:
+    get:
+      description: Search using vector db search results with AI
+      tags:
+        - search
+      parameters:
+        - type: string
+          description: Text to search
+          required: false
+          in: query
+          name: searchText
+        - type: integer
+          description: Limit of results from the database
+          default: 3
+          required: false
+          in: query
+          name: dbResultLimit
+      responses:
+        "200":
+          description: Default Response
+          schema:
+            type: object
+            properties:
+              answer:
+                type: string
+                description: Answer to the search query
+  /db-search:
+    get:
+      description: Search using vector db search results
+      tags:
+        - search
+      parameters:
+        - type: string
+          description: Text to search
+          required: false
+          in: query
+          name: searchText
+        - type: integer
+          description: Limit of results from the database
+          default: 3
+          required: false
+          in: query
+          name: dbResultLimit
+      responses:
+        "200":
+          description: Default Response
+          schema:
+            type: object
+            properties:
+              items:
+                type: array
+                description: Search Results
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: ID of the search result
+                    content:
+                      type: string
+                      description: Text of the search result
+                    path:
+                      type: string
+                      description: File path of the search result
+host: localhost:3000
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json

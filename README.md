@@ -151,6 +151,6 @@ Then load a search using: http://localhost:3000/ai-search?searchText=what%20is%2
 
 #### View Swagger Docs
 
-[![Swagger Docs](swagger.png)](http://localhost:3000/docs)
+[![Swagger Docs](swagger.png)](https://paulb896.github.io/llm-doc-embeddings/)
 
-Swagger docs are available here: **http://localhost:3000/docs**.
+Local Swagger docs will be available here: **http://localhost:3000/docs**, and an example can be seen here: https://paulb896.github.io/llm-doc-embeddings/.

@@ -9,7 +9,8 @@
     "insert-file": "ts-node insertChunks.ts",
     "insert-dir": "ts-node insertChunksFromDirectory.ts",
     "search": "ts-node search.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate-swagger": "ts-node generateSwaggerFile.ts"
   },
   "author": "",
   "license": "ISC",
