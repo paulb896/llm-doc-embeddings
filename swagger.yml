@@ -76,3 +76,6 @@ consumes:
   - application/json
 produces:
   - application/json
+externalDocs:
+  url: https://github.com/paulb896/llm-doc-embeddings
+  description: Github for LLM Doc Embeddings
