@@ -15,6 +15,8 @@ Parse and Load text files into Postges Vector DB which can be used as part of a 
     - [Index Directory of Documents](#index-directory-of-documents)
     - [Search Indexed Database for Relevent Documents](#search-indexed-database-for-relevent-documents)
     - [Use AI to Generate Response from Search Results](#use-ai-to-generate-response-from-search-results)
+    - [Run Web Server in Dev Mode](#run-web-server-in-dev-mode)
+    - [Build Web Server](#build-web-server)
     - [Start Web Server](#start-web-server)
       - [View Swagger Docs](#view-swagger-docs)
   - [System Overview](#system-overview)
@@ -84,6 +86,7 @@ OLLAMA_CHAT_MODEL=llama3.2
 # If this is changed, the VECTOR_DATABASE_EMBEDDING_DIMENSIONS may also need to be updated.
 OLLAMA_EMBEDDING_MODEL=mxbai-embed-large
 
+WEBSERVER_HOST=localhost
 WEBSERVER_PORT=3000
 ```
 
@@ -142,6 +145,18 @@ npm run search "What's an LLM"
 
 ```bash
 npm run ai-search "What's an LLM"
+```
+
+### Run Web Server in Dev Mode
+
+```bash
+npm run dev
+```
+
+### Build Web Server
+
+```bash
+npm run build
 ```
 
 ### Start Web Server

@@ -6,6 +6,7 @@ import { aiSearchRoute } from './routes/aiSearchRoute';
 import { dbSearchRoute } from './routes/dbSearchRoute';
 
 const PORT = parseInt(process.env.WEBSERVER_PORT || '', 10) || 3000;
+const HOST = process.env.WEBSERVER_HOST || 'localhost';
 
 export const server = fastify({
   logger: true,
@@ -23,7 +24,7 @@ server.register(fastifySwagger, {
       description: 'API documentation for AI search',
       version: '1.0.0',
     },
-    host: 'localhost:' + PORT,
+    host: `${HOST}:${PORT}`,
     schemes: ['http'],
     consumes: ['application/json'],
     produces: ['application/json'],

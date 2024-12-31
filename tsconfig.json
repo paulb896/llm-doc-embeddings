@@ -8,8 +8,7 @@
       "esModuleInterop": true,
       "forceConsistentCasingInFileNames": true,
       "skipLibCheck": true,
-      "resolveJsonModule": true,
-      "types": ["semantic-chunking"]
+      "resolveJsonModule": true
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules", "dist"]

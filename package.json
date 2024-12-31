@@ -4,13 +4,16 @@
   "description": "",
   "main": "search.js",
   "scripts": {
-    "ai-search": "ts-node aiChat.ts",
-    "start": "ts-node index.ts",
-    "insert-file": "ts-node insertChunks.ts",
-    "insert-dir": "ts-node insertChunksFromDirectory.ts",
-    "search": "ts-node search.ts",
+    "build": "tsc",
+    "dev": "ts-node index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "generate-swagger": "ts-node generateSwaggerFile.ts"
+    "generate-swagger": "ts-node generateSwaggerFile.ts",
+
+    "start": "node dist/index.js",
+    "ai-search": "ts-node aiChat.ts",
+    "insert-dir": "ts-node insertChunksFromDirectory.ts",
+    "insert-file": "ts-node insertChunks.ts",
+    "search": "ts-node search.ts"
   },
   "author": "",
   "license": "ISC",
@@ -22,14 +25,13 @@
     "langchain": "0.3.8",
     "ollama": "0.5.11",
     "pg": "8.13.1",
-    "semantic-chunking": "2.4.1",
-    "ts-morph": "24.0.0",
-    "ts-node": "10.9.2"
+    "semantic-chunking": "2.4.1"
   },
   "devDependencies": {
     "@types/node": "22.10.2",
     "@types/pg": "8.11.10",
     "@types/uuid": "10.0.0",
+    "ts-node": "10.9.2",
     "typescript": "5.7.2"
   }
 }

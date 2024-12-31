@@ -1,3 +1,4 @@
-node_modules
 .env
+dist
 models
+node_modules
