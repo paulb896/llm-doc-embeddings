@@ -1,5 +1,7 @@
 # LLM Text Document Embeddings
 
+![Document Search](document-search.jpeg)
+
 Parse and Load text files into Postges Vector DB which can be used as part of a RAG setup.
 
 - [LLM Text Document Embeddings](#llm-text-document-embeddings)
@@ -15,6 +17,7 @@ Parse and Load text files into Postges Vector DB which can be used as part of a 
     - [Use AI to Generate Response from Search Results](#use-ai-to-generate-response-from-search-results)
     - [Start Web Server](#start-web-server)
       - [View Swagger Docs](#view-swagger-docs)
+  - [System Overview](#system-overview)
 
 ## Set up Instructions
 
@@ -154,3 +157,32 @@ Then load a search using: http://localhost:3000/ai-search?searchText=what%20is%2
 [![Swagger Docs](swagger.png)](https://paulb896.github.io/llm-doc-embeddings/)
 
 Local Swagger docs will be available here: **http://localhost:3000/docs**, and an example can be seen here: https://paulb896.github.io/llm-doc-embeddings/.
+
+## System Overview
+
+```mermaid
+sequenceDiagram
+    actor U as User
+    actor AU as Admin User
+    participant WS as Webserver or Script
+    participant LE as LLM (Embeddings)
+    participant PG as Postgres (pgvector)
+    participant LG as LLM (Generation)
+
+    Note over AU, PG: Admin Document Ingestion
+    AU ->> WS: Upload document
+    WS ->> LE: Generate Document Embeddings
+    LE -->> WS: Document Embedding Vectors
+    WS ->> PG: Store Document Embeddings
+    PG ->> WS: Document Storage Success and ID
+    WS -->> AU: Document Storage Success Message
+
+    Note over U, LG: User Query
+    U ->> WS: User Query
+    WS ->> LG: Generate Embedding Based on Query Text
+    LG -->> WS: Query Embedding
+    WS ->> PG: Similarity Search (Query Embedding)
+    PG -->> WS: Relevant Context (from other tables)
+    WS -->> LG: Query + Context
+    LG -->> U: Generated Response
+```
