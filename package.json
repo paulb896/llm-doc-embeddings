@@ -10,10 +10,10 @@
     "generate-swagger": "ts-node generateSwaggerFile.ts",
 
     "start": "node dist/index.js",
-    "ai-search": "ts-node aiChat.ts",
-    "insert-dir": "ts-node insertChunksFromDirectory.ts",
-    "insert-file": "ts-node insertChunks.ts",
-    "search": "ts-node search.ts"
+    "ai-search": "ts-node src/aiChat.ts",
+    "insert-dir": "ts-node src/insertChunksFromDirectory.ts",
+    "insert-file": "ts-node src/insertChunks.ts",
+    "search": "ts-node src/search.ts"
   },
   "author": "",
   "license": "ISC",
