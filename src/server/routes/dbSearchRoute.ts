@@ -37,11 +37,6 @@ export const dbSearchRoute = async (server: FastifyInstance) => {
               },
             }
           }
-        },
-        config: {
-          swagger: {
-            exposeHeadRoute: true,
-          }
         }
       }
     },

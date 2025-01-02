@@ -4,6 +4,7 @@ import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import { aiSearchRoute } from './routes/aiSearchRoute';
 import { dbSearchRoute } from './routes/dbSearchRoute';
+import { indexDocsRoute } from './routes/indexDocsRoute';
 
 const PORT = parseInt(process.env.WEBSERVER_PORT || '', 10) || 3000;
 const HOST = process.env.WEBSERVER_HOST || 'localhost';
@@ -37,6 +38,7 @@ server.register(fastifySwagger, {
 
 server.register(aiSearchRoute);
 server.register(dbSearchRoute);
+server.register(indexDocsRoute);
 server.register(fastifySwaggerUi, {
   routePrefix: '/docs',
 });

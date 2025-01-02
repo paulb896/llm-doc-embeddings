@@ -27,11 +27,6 @@ export const aiSearchRoute = (server: FastifyInstance) => {
               answer: { type: 'string', description: 'Answer to the search query' },
             }
           }
-        },
-        config: {
-          swagger: {
-            exposeHeadRoute: true,
-          }
         }
       }
     },

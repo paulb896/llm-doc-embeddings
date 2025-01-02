@@ -5,7 +5,8 @@
 Parse and Load text files into Postges Vector DB which can be used as part of a RAG setup.
 
 - [LLM Text Document Embeddings](#llm-text-document-embeddings)
-  - [Set up Instructions](#set-up-instructions)
+  - [Quick Start](#quick-start)
+  - [Manual Set up Instructions](#manual-set-up-instructions)
     - [1. Set up Docker environment](#1-set-up-docker-environment)
     - [2. Connect to the database using a PostgreSQL GUI client](#2-connect-to-the-database-using-a-postgresql-gui-client)
     - [3. Set up Ollama and Configure Env Vars](#3-set-up-ollama-and-configure-env-vars)
@@ -21,34 +22,41 @@ Parse and Load text files into Postges Vector DB which can be used as part of a 
       - [View Swagger Docs](#view-swagger-docs)
   - [System Overview](#system-overview)
 
-## Set up Instructions
+## Quick Start
+
+Add your custom text documents to the [docs](docs) directory.
+This will run everything if you want to avoid having to install node/postgres/ollama.
+
+```bash
+# Run everything
+docker compose up -f docker-compose.yml -d
+```
+
+## Manual Set up Instructions
 
 ### 1. Set up Docker environment
 
-Create a `docker-compose.yml` file with the following content:
+Choose on of the following docker compose files based on your preferences:
 
-```yaml
-services:
-  timescaledb:
-    image: timescale/timescaledb-ha:pg16
-    container_name: timescaledb
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_PASSWORD=password
-    ports:
-      - "5432:5432"
-    volumes:
-      - timescaledb_data:/var/lib/postgresql/data
-    restart: unless-stopped
+| File                      | Description |
+|---------------------------|-------------------------------------------------|
+| docker-compose.yml        | Runs the postgres db, ollama and the nodejs app |
+| docker-compose-app-db.yml | Runs the postgres db and the nodejs app |
+| docker-compose-db.yml     | Runs the postgres db |
+| docker-compose-app.yml    | Runs the nodejs app  |
 
-volumes:
-  timescaledb_data:
-```
 
-Run the Docker container:
+Run the Docker container(s):
 
 ```bash
-docker compose up -d
+# Run just the app/db
+docker compose up -f docker-compose-app-db.yml -d
+
+# Run just the db
+docker compose up -f docker-compose-db.yml -d
+
+# Run just the app
+docker compose up -f docker-compose-app.yml -d
 ```
 
 ### 2. Connect to the database using a PostgreSQL GUI client
