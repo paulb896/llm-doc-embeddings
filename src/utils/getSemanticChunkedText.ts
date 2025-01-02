@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from "uuid";
-import { TextLoader } from "langchain/document_loaders/fs/text";
 
 interface TextChunk {
   id: string;
@@ -8,33 +7,33 @@ interface TextChunk {
     type: "paragraph" | "heading" | "list_item" | "other";
     headingLevel?: number;
   };
-  path: string;
+  path: string; // You might repurpose this for a source identifier
   startLine: number;
   endLine: number;
   embedding?: number[];
 }
 
-export const getSemanticChunkedText = async (textFilePath: string): Promise<TextChunk[]> => {
-  console.log(`Text file path: ${textFilePath}`);
-
-  const loader = new TextLoader(textFilePath);
-  const documents = await loader.load();
-  const fullText = documents[0].pageContent;
-
-
+export const getSemanticChunkedText = async (
+  textString: string,
+  sourceIdentifier?: string
+): Promise<TextChunk[]> => {
   const chunks: TextChunk[] = [];
   // @ts-ignore
   const { chunkit } = await import("semantic-chunking");
-  const results = await chunkit([
-    {
-      document_name: textFilePath,
-      document_text: fullText
-    }
-  ], {
-    maxTokens: 500
-  });
 
-  let currentLine = 1; 
+  const results = await chunkit(
+    [
+      {
+        document_name: sourceIdentifier || "unknown",
+        document_text: textString,
+      },
+    ],
+    {
+      maxTokens: 500,
+    }
+  );
+
+  let currentLine = 1;
   for (const chunk of results) {
     const lines = chunk.text.split("\n");
     const startLine = currentLine;
@@ -43,8 +42,8 @@ export const getSemanticChunkedText = async (textFilePath: string): Promise<Text
     chunks.push({
       id: uuidv4(),
       content: chunk.text,
-      metadata: { type: 'paragraph' },
-      path: textFilePath,
+      metadata: { type: "paragraph" },
+      path: sourceIdentifier || "unknown",
       startLine,
       endLine,
     });

@@ -19,6 +19,7 @@ Parse and Load text files into Postges Vector DB which can be used as part of a 
     - [Run Web Server in Dev Mode](#run-web-server-in-dev-mode)
     - [Build Web Server](#build-web-server)
     - [Start Web Server](#start-web-server)
+      - [Upload a text file](#upload-a-text-file)
       - [View Swagger Docs](#view-swagger-docs)
   - [System Overview](#system-overview)
 
@@ -29,7 +30,7 @@ This will run everything if you want to avoid having to install node/postgres/ol
 
 ```bash
 # Run everything
-docker compose up -f docker-compose.yml -d
+docker compose -f docker-compose.yml up
 ```
 
 ## Manual Set up Instructions
@@ -50,13 +51,13 @@ Run the Docker container(s):
 
 ```bash
 # Run just the app/db
-docker compose up -f docker-compose-app-db.yml -d
+docker compose -f docker-compose-app-db.yml up
 
 # Run just the db
-docker compose up -f docker-compose-db.yml -d
+docker compose -f docker-compose-db.yml up
 
 # Run just the app
-docker compose up -f docker-compose-app.yml -d
+docker compose -f docker-compose-app.yml up
 ```
 
 ### 2. Connect to the database using a PostgreSQL GUI client
@@ -171,6 +172,17 @@ npm run build
 
 ```bash
 npm start
+```
+
+#### Upload a text file
+
+```bash
+curl -X POST \
+  http://localhost:3000/upload \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'file=@docs/llama.txt' \
+  -F 'description=About Llama' \
+  -F 'category=Documents'
 ```
 
 Then load a search using: http://localhost:3000/ai-search?searchText=what%20is%20an%20llm&dbResultLimit=5.

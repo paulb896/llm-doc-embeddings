@@ -69,6 +69,52 @@ paths:
                     path:
                       type: string
                       description: File path of the search result
+  /index-docs:
+    get:
+      description: Index all of the documents in the docs directory
+      tags:
+        - indexer
+      responses:
+        "200":
+          description: Default Response
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: Success of the indexing operation
+  /upload:
+    post:
+      summary: Uploads a file to the server
+      description: Upload a file
+      tags:
+        - documents
+      consumes:
+        - multipart/form-data
+      responses:
+        "200":
+          description: Default Response
+  /documents/{fileName}:
+    get:
+      summary: Retrieves the content of a document by file name
+      description: Get the text content of a document
+      tags:
+        - documents
+      parameters:
+        - type: string
+          description: The name of the file to retrieve
+          required: true
+          in: path
+          name: fileName
+      responses:
+        "200":
+          description: Default Response
+          schema:
+            type: object
+            properties:
+              content:
+                type: string
+                description: The text content of the file
 host: localhost:3000
 schemes:
   - http

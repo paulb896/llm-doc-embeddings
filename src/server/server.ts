@@ -2,9 +2,12 @@ import 'dotenv/config';
 import fastify from 'fastify';
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
+import multipart from "@fastify/multipart";
 import { aiSearchRoute } from './routes/aiSearchRoute';
 import { dbSearchRoute } from './routes/dbSearchRoute';
 import { indexDocsRoute } from './routes/indexDocsRoute';
+import { fileUploadRoute } from './routes/fileUploadRoute';
+import { getFileRoute } from './routes/getFileRoute';
 
 const PORT = parseInt(process.env.WEBSERVER_PORT || '', 10) || 3000;
 const HOST = process.env.WEBSERVER_HOST || 'localhost';
@@ -18,6 +21,7 @@ export const server = fastify({
   }
 });
 
+server.register(multipart);
 server.register(fastifySwagger, {
   swagger: {
     info: {
@@ -39,6 +43,8 @@ server.register(fastifySwagger, {
 server.register(aiSearchRoute);
 server.register(dbSearchRoute);
 server.register(indexDocsRoute);
+server.register(fileUploadRoute);
+server.register(getFileRoute);
 server.register(fastifySwaggerUi, {
   routePrefix: '/docs',
 });

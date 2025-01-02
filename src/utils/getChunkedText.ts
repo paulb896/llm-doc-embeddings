@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
-import { TextLoader } from "langchain/document_loaders/fs/text";
+import { Document } from "langchain/document";
 
 interface TextChunk {
   id: string;
@@ -15,21 +15,24 @@ interface TextChunk {
   embedding?: number[];
 }
 
-export const getChunkedText = async (textFilePath: string): Promise<TextChunk[]> => {
-  console.log(`Text file path: ${textFilePath}`);
-
-  const loader = new TextLoader(textFilePath);
-  const documents = await loader.load();
-
+export const getChunkedText = async (
+  textString: string,
+  sourceIdentifier?: string
+): Promise<TextChunk[]> => {
   const textSplitter = new RecursiveCharacterTextSplitter({
     chunkSize: 500,
     chunkOverlap: 50,
     separators: ["\n\n", "\n", "```", "/*", "*/", "//", " ", ""],
-    keepSeparator: true
+    keepSeparator: true,
+  });
+
+  const document = new Document({
+    pageContent: textString,
+    metadata: { source: sourceIdentifier || "unknown" },
   });
 
   const chunks: TextChunk[] = [];
-  const langchainChunks = await textSplitter.splitDocuments(documents);
+  const langchainChunks = await textSplitter.splitDocuments([document]);
 
   let currentLine = 1;
   langchainChunks.forEach((chunk, index) => {
@@ -37,7 +40,6 @@ export const getChunkedText = async (textFilePath: string): Promise<TextChunk[]>
     const startLine = currentLine;
     const endLine = startLine + lines.length - 1;
 
-    // Type detection logic
     let type: TextChunk["metadata"]["type"] = "other";
     const firstLine = lines[0].trim();
 
@@ -53,7 +55,7 @@ export const getChunkedText = async (textFilePath: string): Promise<TextChunk[]>
       id: uuidv4(),
       content: chunk.pageContent,
       metadata: { type },
-      path: textFilePath,
+      path: sourceIdentifier || "unknown",
       startLine,
       endLine,
     });

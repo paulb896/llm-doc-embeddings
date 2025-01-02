@@ -1,45 +1,47 @@
 import { FastifyInstance } from "fastify";
 import { getInitializedVectorStore } from "../../utils/getInitializedVectorStore";
 
+const ROUTE_SCHEMA = {
+  schema: {
+    description: 'Search using vector db search results',
+    tags: ['search'],
+    query: {
+      type: 'object',
+      properties: {
+        searchText: { type: 'string', description: 'Text to search' },
+        dbResultLimit: {
+          type: 'integer',
+          description: 'Limit of results from the database',
+          default: 3,
+        },
+      },
+    },
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          items: {
+            type: 'array',
+            description: 'Search Results',
+            items: {
+              type: 'object',
+              properties: {
+                id: { type: 'string', description: 'ID of the search result' },
+                content: { type: 'string', description: 'Text of the search result' },
+                path: { type: 'string', description: 'File path of the search result' }
+              }
+            }
+          },
+        }
+      }
+    }
+  }
+};
+
 export const dbSearchRoute = async (server: FastifyInstance) => {
   server.get(
     '/db-search',
-    {
-      schema: {
-        description: 'Search using vector db search results',
-        tags: ['search'],
-        query: {
-          type: 'object',
-          properties: {
-            searchText: { type: 'string', description: 'Text to search' },
-            dbResultLimit: {
-              type: 'integer',
-              description: 'Limit of results from the database',
-              default: 3,
-            },
-          },
-        },
-        response: { 
-          200: {
-            type: 'object',
-            properties: {
-              items: {
-                type: 'array',
-                description: 'Search Results',
-                items: {
-                  type: 'object',
-                  properties: {
-                    id: { type: 'string', description: 'ID of the search result' },
-                    content: { type: 'string', description: 'Text of the search result' },
-                    path: { type: 'string', description: 'File path of the search result' }
-                  }
-                }
-              },
-            }
-          }
-        }
-      }
-    },
+    ROUTE_SCHEMA,
     async (request, reply) => {
       const { searchText, dbResultLimit } = request.query as {
         searchText: string;

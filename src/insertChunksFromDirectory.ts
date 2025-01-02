@@ -4,6 +4,9 @@ import { getVectorStore } from "./utils/getVectorStore";
 import { getAllFiles } from './utils/getAllFiles';
 import { getSemanticChunkedText } from './utils/getSemanticChunkedText';
 import { getChunkedText } from './utils/getChunkedText';
+import { getFileAsString } from './utils/getFileAsString';
+import { getDocumentStore } from './utils/getDocumentStore';
+import { saveFileToDatabase } from './utils/saveFileToDatabase';
 
 const USE_SEMANTIC_CHUNKING = process.env.USE_SEMANTIC_CHUNKING === "true";
 const getChunks = USE_SEMANTIC_CHUNKING ? getSemanticChunkedText : getChunkedText;
@@ -16,6 +19,9 @@ const main = async () => {
     process.exit(1);
   }
 
+  const pgClient = getDocumentStore();
+  await pgClient.connect();
+
   const vectorStore = getVectorStore();
   await vectorStore.connect();
   await vectorStore.createTables();
@@ -24,8 +30,12 @@ const main = async () => {
   const allFiles = await getAllFiles(directoryPath);
 
   for (const file of allFiles) {
-    const docChunks = await getChunks(file);
+    const fileContent = await getFileAsString(file);
 
+    const fileBuffer = Buffer.from(fileContent, 'utf-8');
+    await saveFileToDatabase(pgClient, file, fileBuffer);
+
+    const docChunks = await getChunks(fileContent, file);
     for (const chunk of docChunks) {
       chunk.embedding = await createEmbedding(chunk.content);
     }
@@ -33,6 +43,7 @@ const main = async () => {
     await vectorStore.upsert(docChunks);
   }
 
+  await pgClient.end();
   await vectorStore.disconnect();
 };
 
