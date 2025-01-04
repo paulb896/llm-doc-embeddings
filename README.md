@@ -21,6 +21,8 @@ Parse and Load text files into Postges Vector DB which can be used as part of a 
     - [Start Web Server](#start-web-server)
       - [Upload a text file](#upload-a-text-file)
       - [View Swagger Docs](#view-swagger-docs)
+  - [Example Applications](#example-applications)
+    - [Simple App](#simple-app)
   - [System Overview](#system-overview)
 
 ## Quick Start
@@ -192,6 +194,14 @@ Then load a search using: http://localhost:3000/ai-search?searchText=what%20is%2
 [![Swagger Docs](swagger.png)](https://paulb896.github.io/llm-doc-embeddings/)
 
 Local Swagger docs will be available here: **http://localhost:3000/docs**, and an example can be seen here: https://paulb896.github.io/llm-doc-embeddings/.
+
+## Example Applications
+
+### Simple App
+
+See the [simple react app](./examples/simple-app/README.md) for more details.
+
+![Example App](./examples/simple-app/example-app.png)
 
 ## System Overview
 
