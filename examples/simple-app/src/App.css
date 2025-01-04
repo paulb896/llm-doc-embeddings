@@ -16,7 +16,7 @@
   width: 80%;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1400px) {
   .content-container {
     flex-direction: row;
   }
@@ -120,4 +120,15 @@
   background-color: #6c757d;
   cursor: default;
   opacity: 0.6;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 0.8em;
 }

@@ -115,6 +115,20 @@ paths:
               content:
                 type: string
                 description: The text content of the file
+    delete:
+      summary: Deletes a document from the server
+      description: Delete a document by file name
+      tags:
+        - documents
+      parameters:
+        - type: string
+          description: The name of the file to delete
+          required: true
+          in: path
+          name: fileName
+      responses:
+        "200":
+          description: Default Response
   /documents:
     get:
       summary: Retrieves a list of all document file names

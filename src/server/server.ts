@@ -10,6 +10,7 @@ import { indexDocsRoute } from './routes/indexDocsRoute';
 import { documentUploadRoute } from './routes/documentUploadRoute';
 import { getDocumentRoute } from './routes/getDocumentRoute';
 import { getDocumentsRoute } from './routes/getDocumentsRoute';
+import { deleteDocumentRoute } from './routes/deleteDocumentRoute';
 
 const PORT = parseInt(process.env.WEBSERVER_PORT || '', 10) || 3000;
 const HOST = process.env.WEBSERVER_HOST || 'localhost';
@@ -49,6 +50,7 @@ server.register(indexDocsRoute);
 server.register(documentUploadRoute);
 server.register(getDocumentRoute);
 server.register(getDocumentsRoute);
+server.register(deleteDocumentRoute);
 server.register(fastifySwaggerUi, {
   routePrefix: '/docs',
 });
