@@ -4,6 +4,9 @@ import { getAllFiles } from "../../utils/getAllFiles";
 import { getSemanticChunkedText } from "../../utils/getSemanticChunkedText";
 import { getChunkedText } from "../../utils/getChunkedText";
 import { createEmbedding } from "../../utils/createEmbedding";
+import { getDocumentStore } from "../../utils/getDocumentStore";
+import { getFileAsString } from "../../utils/getFileAsString";
+import { saveFileToDatabase } from "../../utils/saveFileToDatabase";
 
 const USE_SEMANTIC_CHUNKING = process.env.USE_SEMANTIC_CHUNKING === "true";
 const getChunks = USE_SEMANTIC_CHUNKING ? getSemanticChunkedText : getChunkedText;
@@ -28,6 +31,9 @@ export const indexDocsRoute = async (server: FastifyInstance) => {
     '/index-docs',
     ROUTE_SCHEMA,
     async () => {
+      const pgClient = getDocumentStore();
+      await pgClient.connect();
+
       const vectorStore = getVectorStore();
       await vectorStore.connect();
       await vectorStore.createTables();
@@ -36,6 +42,11 @@ export const indexDocsRoute = async (server: FastifyInstance) => {
       const allFiles = await getAllFiles('docs');
 
       for (const file of allFiles) {
+        const fileContent = await getFileAsString(file);
+
+        const fileBuffer = Buffer.from(fileContent, 'utf-8');
+        await saveFileToDatabase(pgClient, file, fileBuffer);
+
         const docChunks = await getChunks(file);
 
         for (const chunk of docChunks) {
@@ -45,6 +56,7 @@ export const indexDocsRoute = async (server: FastifyInstance) => {
         await vectorStore.upsert(docChunks);
       }
 
+      await pgClient.end();
       await vectorStore.disconnect();
     }
   );

@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { getDocumentStore } from "../../utils/getDocumentStore";
 
-export const getFileRoute = (server: FastifyInstance) => {
+export const getDocumentRoute = (server: FastifyInstance) => {
   server.get(
     "/documents/:fileName",
     {

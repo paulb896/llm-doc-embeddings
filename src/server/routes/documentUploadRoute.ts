@@ -14,8 +14,8 @@ const getChunks = USE_SEMANTIC_CHUNKING ? getSemanticChunkedText : getChunkedTex
 const ROUTE_SCHEMA = {
   schema: {
     consumes: ["multipart/form-data"],
-    description: "Upload a file",
-    summary: "Uploads a file to the server",
+    description: "Upload a document",
+    summary: "Uploads a document to the server",
     tags: ['documents'],
   },
 };
@@ -35,7 +35,7 @@ async function processChunks(fileContent: string, fileName: string) {
   await vectorStore.disconnect();
 }
 
-export const fileUploadRoute = (server: FastifyInstance) => {
+export const documentUploadRoute = (server: FastifyInstance) => {
   server.post("/upload", ROUTE_SCHEMA, async (request, reply) => {
     const data = await request.file();
 

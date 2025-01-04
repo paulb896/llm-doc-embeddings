@@ -85,8 +85,8 @@ paths:
                 description: Success of the indexing operation
   /upload:
     post:
-      summary: Uploads a file to the server
-      description: Upload a file
+      summary: Uploads a document to the server
+      description: Upload a document
       tags:
         - documents
       consumes:
@@ -115,6 +115,20 @@ paths:
               content:
                 type: string
                 description: The text content of the file
+  /documents:
+    get:
+      summary: Retrieves a list of all document file names
+      description: Get all document file names
+      tags:
+        - documents
+      responses:
+        "200":
+          description: Default Response
+          schema:
+            type: array
+            items:
+              type: string
+              description: File name
 host: localhost:3000
 schemes:
   - http
