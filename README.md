@@ -201,7 +201,7 @@ Local Swagger docs will be available here: **http://localhost:3000/docs**, and a
 
 See the [simple react app](./examples/simple-app/README.md) for more details.
 
-![Example App](./examples/simple-app/example-app.png)
+![Example App](./examples/simple-app/example-simple-app.png)
 
 ## System Overview
 

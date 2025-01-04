@@ -190,8 +190,8 @@ function App() {
           <h2 className="area-title">Files</h2>
           <ul className="file-list">
             {files.map(file => (
-              <li key={file} className="file-item">
-                <span onClick={() => getFile(file)}>{file}</span>
+              <li key={file} className="file-item" onClick={() => getFile(file)}>
+                <span>{file}</span>
                 <button onClick={() => deleteDocument(file)} className="delete-button">
                   Delete
                 </button>

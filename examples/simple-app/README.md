@@ -2,7 +2,7 @@
 
 Uses locally running LLM [API](https://paulb896.github.io/llm-doc-embeddings/) to allow users to upload, view, and search through documents.
 
-![Example App](./example-app.png)
+![Example App](./example-simple-app.png)
 
 ## Set Up Instructions
 
