@@ -28,10 +28,12 @@ function App() {
     fetchFiles();
   }, []);
 
-  const formatAsMarkdown = (text: string) => {
-    const formattedText = text.replace(/==(.*?)==/g, '## $1\n');
-    return formattedText;
-  };
+  const formatAsMarkdown = (text: string) =>
+    text.replace(/(=+)(.*?)\1/g, (match, equals, content) => {
+      const headingLevel = equals.length;
+      const heading = '#'.repeat(headingLevel) + ' ' + content.trim() + '\n';
+      return heading;
+    });
 
   const handleSearchTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value);
@@ -200,7 +202,7 @@ function App() {
 
         <div className="results-area">
           <h2 className="area-title">Results</h2>
-          <div className="results-content" dangerouslySetInnerHTML={{ __html: md.render(results) }} />
+          <div className="results-content" dangerouslySetInnerHTML={{ __html: md.render(formatAsMarkdown(results)) }} />
         </div>
       </div>
     </div>
