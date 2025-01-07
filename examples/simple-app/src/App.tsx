@@ -11,6 +11,7 @@ function App() {
   const [files, setFiles] = useState<string[]>([]);
   const [isIndexing, setIsIndexing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const md = new Remarkable();
 
@@ -72,6 +73,7 @@ function App() {
       setIsLoading(true);
       await uploadFile(fileInputRef.current.files[0]);
       fileInputRef.current.value = '';
+      setSelectedFile(null);
       await fetchFiles();
       setIsLoading(false);
     }
@@ -109,7 +111,7 @@ function App() {
   const getFile = async (fileName: string) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`${apiUrl}/documents/${fileName}`);
+      const response = await fetch(`${apiUrl}/documents/${encodeURIComponent(fileName)}`);
       const data = await response.json();
       setResults(data.content);
     } catch (error) {
@@ -122,7 +124,7 @@ function App() {
   const deleteDocument = async (fileName: string) => {
     if (window.confirm(`Are you sure you want to delete ${fileName}?`)) {
       try {
-        await fetch(`${apiUrl}/documents/${fileName}`, {
+        await fetch(`${apiUrl}/documents/${encodeURIComponent(fileName)}`, {
           method: 'DELETE',
         });
         setResults(`Document ${fileName} deleted successfully`);
@@ -131,6 +133,10 @@ function App() {
         setResults(`Error deleting document: ${error}`);
       }
     }
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedFile(event.target.files?.[0] ?? null);
   };
 
   return (
@@ -151,14 +157,14 @@ function App() {
             <button
               className="search-button"
               onClick={aiSearch}
-              disabled={isLoading}
+              disabled={isIndexing || isLoading}
             >
-              {isLoading ? 'Loading...' : 'AI Search'}
+              {isIndexing || isLoading ? 'Loading...' : 'AI Search'}
             </button>
             <button
               className="search-button"
               onClick={dbSearch}
-              disabled={isLoading}
+              disabled={isIndexing || isLoading}
             >
               {isLoading ? 'Loading...' : 'DB Search'}
             </button>
@@ -168,23 +174,24 @@ function App() {
           <input
             type="file"
             className="upload-input"
+            onChange={handleFileChange}
             ref={fileInputRef}
           />
           <button
             className="upload-button"
             onClick={handleFileUpload}
-            disabled={isLoading}
+            disabled={isIndexing || isLoading || !selectedFile}
           >
-            {isLoading ? 'Uploading...' : 'Upload Document'}
+            {isIndexing || isLoading ? 'Loading...' : 'Upload Document'}
           </button>
 
           <h2 className="area-title">Index</h2>
           <button
             className="index-button"
             onClick={indexDocs}
-            disabled={isIndexing}
+            disabled={isIndexing || isLoading}
           >
-            {isIndexing ? 'Indexing...' : 'Index Documents'}
+            {isIndexing || isLoading ? 'Loading...' : 'Index Documents'}
           </button>
 
           <h2 className="area-title">Files</h2>
